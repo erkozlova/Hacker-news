@@ -1,1 +1,0 @@
-# Avito-test-task
