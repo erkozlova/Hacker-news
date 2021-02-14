@@ -1,34 +1,20 @@
 import React from "react";
-import { ThemeProvider } from "@material-ui/core";
+import { useDispatch } from 'react-redux';
 import Appbar from './Appbar';
 import Main from './Main';
-import theme from '../theme/theme';
-import api from '../utils/api';
-
+import { getNews } from '../actions';
 
 const App = () => {
-
-  const testApi = () => {
-    api.getNewsList().then((data) => { 
-      const news=data.slice(0,100);
-      let newsData = [];
-      news.forEach((item) => {
-        api.getNews(item).then((data) => {
-          newsData.push(data);
-        });
-      })
-      console.log(newsData);
-    });
-  };
-
-  testApi();
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+    dispatch(getNews());
+  });
 
   return (
     <>
-    <ThemeProvider theme={theme}>
-    <Appbar />
-    <Main />
-    </ThemeProvider>
+      <Appbar />
+      <Main />
    </>
   );
 }

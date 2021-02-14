@@ -1,11 +1,7 @@
-import { createStore } from 'redux';
-import reducer_test from './reducers/test_reducer';
+import { createStore, applyMiddleware } from 'redux';
+import { reducerNews } from './reducers';
+import thunk from 'redux-thunk';
 
-const store = createStore(reducer_test);
-
-
-store.subscribe(() => console.log('pikachu', store.getState()));
-// console.log(store.getState());
+const store = createStore(reducerNews, applyMiddleware(thunk));
 
 export default store;
-
