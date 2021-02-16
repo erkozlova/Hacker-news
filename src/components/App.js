@@ -15,9 +15,9 @@ const App = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const isLoading = useSelector((state) => state.isLoading);
-  const data = useSelector((state) => state.data);
-  const loadingProcess = useSelector((state) => state.loadingProcess);
+  const isLoading = useSelector((state) => state.news.isLoading);
+  const data = useSelector((state) => state.news.data);
+  const loadingProcess = useSelector((state) => state.news.loadingProcess);
 
 
   const handleUpdate = useCallback(() => {

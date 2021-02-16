@@ -2,7 +2,7 @@ import { GETNEWS_START, GETNEWS_SUCCESS, GETNEWS_FAILED, GETNEWS_PROCESS } from 
 
 const initialState = { data: [], isLoading: false, loadingProcess: 0 };
 
-export const reducerNews = (state = initialState, action) => {
+export const news = (state = initialState, action) => {
   switch (action.type) {
     case GETNEWS_START:
       return { 
