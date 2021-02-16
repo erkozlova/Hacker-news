@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "10px",
     border: "solid 2px #000",
     borderRadius: "5px",
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   rating: {
     display: "flex",
@@ -24,22 +24,22 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "20px",
   },
   wrapper: {
-    display: 'flex',
+    display: "flex",
   },
   title: {
-    marginTop: '10px',
+    marginTop: "10px",
   },
   describe: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   time: {
-    marginRight: '10px',
-    marginTop: '10px',
+    marginRight: "10px",
+    marginTop: "10px",
   },
   author: {
-    marginBottom: '10px',
+    marginBottom: "10px",
   },
 }));
 
@@ -50,9 +50,7 @@ const Item = ({ item }) => {
     <div className={classes.container}>
       <div className={classes.wrapper}>
         <div className={classes.rating}>
-          <Typography component="span">
-            {item.score}
-          </Typography>
+          <Typography component="span">{item.score}</Typography>
         </div>
         <div className={classes.describe}>
           <Typography variant="h5" className={classes.title}>
@@ -61,7 +59,9 @@ const Item = ({ item }) => {
           <Typography
             variant="subtitle2"
             className={classes.author}
-          >{`Author: ${item.by}`}</Typography>
+          >
+            {`Author: ${item.by}`}
+          </Typography>
         </div>
       </div>
       <Typography component="span" className={classes.time}>

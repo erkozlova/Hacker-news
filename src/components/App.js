@@ -1,5 +1,4 @@
-import React from 'react';
-import {useEffect} from "react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import Appbar from './Appbar';
@@ -12,10 +11,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const handleUpdate = (dispatch) => {
-  dispatch(getNews());
-} 
-
 const App = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -23,15 +18,20 @@ const App = () => {
   const isLoading = useSelector((state) => state.isLoading);
   const data = useSelector((state) => state.data);
   const loadingProcess = useSelector((state) => state.loadingProcess);
+
+
+  const handleUpdate = useCallback(() => {
+    dispatch(getNews());
+  }, [dispatch]);
   
   useEffect(() => {
-    const timer = setInterval(() => { handleUpdate(dispatch) }, 64000);
+    const timer = setInterval(() => { handleUpdate() }, 64000);
     
-    handleUpdate(dispatch);
+    handleUpdate();
     return () => {
       clearInterval(timer);
     };
-  }, [dispatch]);
+  }, [handleUpdate]);
 
   return (
     <div className={classes.app}>

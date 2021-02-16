@@ -43,23 +43,25 @@ const Main = (props) => {
         <CircularProgressWithLabel loadingProcess={props.loadingProcess} />
       </section>
     );
-  };
-  if (props.data.length) {
+  }
+
+  if (!props.data.length) {
     return (
-      <section className={classes.sectionNews}>
-        <ul className={classes.list}>
-          {
-            props.data.map((item) => {
-              return (<Item item={item} key={item.id}/>); 
-            })
-          }
-        </ul> 
+      <section className={classes.sectionNotFound}>
+        <Typography variant="h2" className={classes.notFound}>Not found</Typography>
       </section>
     );
   }
+
   return (
-    <section className={classes.sectionNotFound}>
-      <Typography variant="h2" className={classes.notFound}>Not found</Typography>
+    <section className={classes.sectionNews}>
+      <ul className={classes.list}>
+        {
+          props.data.map((item) => {
+            return (<Item item={item} key={item.id}/>); 
+          })
+        }
+      </ul> 
     </section>
   );
 };

@@ -2,7 +2,6 @@ import React from "react";
 import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -24,18 +23,13 @@ const useStyles = makeStyles((theme) => ({
 
 const  Appbar = (props) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
-  const updateNews = () => {
-    props.handleUpdate(dispatch);
-  }
-   
   return (
     <section>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar variant="dense" className={classes.root}>
           <Typography variant="h4" className={classes.typography}>News</Typography>
-          <IconButton edge="end" aria-label="refresh" onClick={updateNews}>
+          <IconButton edge="end" aria-label="refresh" onClick={props.handleUpdate}>
             <RefreshIcon className={classes.refresh}/>
           </IconButton>
         </Toolbar>
