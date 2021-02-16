@@ -1,3 +1,4 @@
+// TODO Переименовать reducerNews
 import { createStore, applyMiddleware } from 'redux';
 import { reducerNews } from './reducers';
 import thunk from 'redux-thunk';

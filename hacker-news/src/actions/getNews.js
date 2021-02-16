@@ -1,10 +1,11 @@
 import * as api from '../utils/api';
+import { GETNEWS_START, GETNEWS_SUCCESS, GETNEWS_FAILED, GETNEWS_PROCESS } from '../constants';
 
 export const getNews =  () => async (dispatch) => {
 
   try {
     dispatch({
-      type: 'GETNEWS_START',
+      type: GETNEWS_START,
     });
     const data = await api.getNewsList();
 
@@ -20,25 +21,24 @@ export const getNews =  () => async (dispatch) => {
           if(!itemData || !Object.keys(itemData).length) {
             throw new Error('Not found');
           }
+          dispatch({
+            type: GETNEWS_PROCESS,
+          });
           return itemData;
       } catch (_) {
         return dispatch({
-          type: 'GETNEWS_FAILED',
+          type: GETNEWS_FAILED,
         });
       }
     }));
 
-    // dispatch({
-    //   type: 'GETNEWS_FINISH'
-    // });
-
     return dispatch({
-      type: 'GETNEWS_SUCCESS',
+      type: GETNEWS_SUCCESS,
       payload: newsData,
     });
   } catch (_) {
       return dispatch({
-        type: 'GETNEWS_FAILED',
+        type: GETNEWS_FAILED,
       });
   }
 };

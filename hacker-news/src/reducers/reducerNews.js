@@ -1,9 +1,36 @@
-// TODO Мне не нравится что изначальное значение true, но без этого в начале загруки страницы возникают ошибки
-export const reducerNews = (state = {data: [], isLoading: true}, action) => {
-  switch(action.type) {
-    case "GETNEWS_START": return {...state, isLoading: true};
-    case 'GETNEWS_SUCCESS': return { ...state, data: action.payload, isLoading: false};
-    case 'GETNEWS_FAILED': return {...state, data: []};
-    default: return state;
+import { GETNEWS_START, GETNEWS_SUCCESS, GETNEWS_FAILED, GETNEWS_PROCESS } from "../constants";
+
+const initialState = { data: [], isLoading: false, loadingProcess: 0 };
+
+export const reducerNews = (state = initialState, action) => {
+  switch (action.type) {
+    case GETNEWS_START:
+      return { 
+        ...state,
+         isLoading: true
+      };
+
+    case GETNEWS_PROCESS: 
+      return {
+        ...state,
+        loadingProcess: state.loadingProcess+1
+      }
+
+    case GETNEWS_SUCCESS:
+      return { 
+        ...state,
+        data: action.payload,
+        isLoading: false,
+        loadingProcess: 0
+      };
+
+    case GETNEWS_FAILED:
+      return { 
+        ...state,
+        data: []
+      };
+
+    default:
+      return state;
   }
-}
+};
