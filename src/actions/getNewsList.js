@@ -1,9 +1,9 @@
 import * as api from '../utils/api';
-import { GETNEWS_START, GETNEWS_SUCCESS, GETNEWS_FAILED, GETNEWS_PROCESS } from '../constants';
+import { GETNEWSLIST_START, GETNEWSLIST_SUCCESS, GETNEWSLIST_FAILED, GETNEWSLIST_PROCESS } from '../constants';
 
-export const getNews =  () => async (dispatch) => {
+export const getNewsList =  () => async (dispatch) => {
   dispatch({
-    type: GETNEWS_START,
+    type: GETNEWSLIST_START,
   });
   
   try {
@@ -17,7 +17,7 @@ export const getNews =  () => async (dispatch) => {
     const newsData = await Promise.all(news.reduce((array, item) => {
           const itemData = api.getNews(item).then((res) => {
             dispatch({
-              type: GETNEWS_PROCESS,
+              type: GETNEWSLIST_PROCESS,
             });
             return res;
           });
@@ -28,12 +28,12 @@ export const getNews =  () => async (dispatch) => {
     const filterNewsData = newsData.reduce((array, curr) => curr? [...array, curr] : array, []);
 
     return dispatch({
-      type: GETNEWS_SUCCESS,
+      type: GETNEWSLIST_SUCCESS,
       payload: filterNewsData,
     });
   } catch (_) {
       return dispatch({
-        type: GETNEWS_FAILED,
+        type: GETNEWSLIST_FAILED,
       });
   }
 };

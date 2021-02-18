@@ -1,9 +1,11 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Appbar from './Appbar';
-import Main from './Main';
-import { getNews } from '../actions';
+import NewsSearch from './NewsSearch';
+import NewsItem from './NewsItem';
+import { getNewsList, getNewsItem } from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -15,28 +17,31 @@ const App = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const isLoading = useSelector((state) => state.news.isLoading);
-  const data = useSelector((state) => state.news.data);
-  const loadingProcess = useSelector((state) => state.news.loadingProcess);
+  const isLoading = useSelector((state) => state.newsList.isLoading);
+  const data = useSelector((state) => state.newsList.data);
+  const loadingProcess = useSelector((state) => state.newsList.loadingProcess);
 
+  const newsItem = useSelector((state) => state.newsItem.data);
+
+  const handleGetNews = useCallback((id) => {
+    dispatch(getNewsItem(id));
+  }, [dispatch]);
 
   const handleUpdate = useCallback(() => {
-    dispatch(getNews());
+    dispatch(getNewsList());
   }, [dispatch]);
   
-  useEffect(() => {
-    const timer = setInterval(() => { handleUpdate() }, 64000);
-    
-    handleUpdate();
-    return () => {
-      clearInterval(timer);
-    };
-  }, [handleUpdate]);
-
   return (
     <div className={classes.app}>
       <Appbar handleUpdate={handleUpdate}/>
-      <Main isLoading={isLoading} data={data} loadingProcess={loadingProcess}/>
+      <Switch>
+        <Route exact path='/'>
+          <NewsSearch isLoading={isLoading} data={data} loadingProcess={loadingProcess} handleUpdate={handleUpdate}/>
+        </Route>
+        <Route path='/news/:id'>
+          <NewsItem handleGetNews={handleGetNews} item={newsItem}></NewsItem>
+        </Route>
+      </Switch>
    </div>
   );
 }
