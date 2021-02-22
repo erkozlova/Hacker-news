@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux'
-import { newsList } from './newsList';
-import { newsItem } from './newsItem';
+import { combineReducers } from "redux";
+import { list } from "./list";
+import { item } from "./item";
+import { comments } from "./comments";
 
 export default combineReducers({
-  newsList,
-  newsItem
-})
+  list,
+  item,
+  comments
+});

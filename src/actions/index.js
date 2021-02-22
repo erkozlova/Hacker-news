@@ -1,2 +1,3 @@
-export * from './getNewsList';
-export * from './getNewsItem';
+export * from "./getList";
+export * from "./getItem";
+export * from "./getComments";

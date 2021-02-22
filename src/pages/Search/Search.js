@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import Item from "./Item";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Typography, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularProgressWithLabel } from "./CircularStatic";
+import { CircularProgressWithLabel } from "./components/CircularProgressWithLabel";
+import { Item } from "./components/Item";
 
 const useStyles = makeStyles((theme) => ({
   sectionLoader: {
@@ -39,12 +40,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Main = ({ handleUpdate, isLoading, loadingProcess, data }) => {
+export const Search = ({ handleUpdate }) => {
   const classes = useStyles();
 
+  const isLoading = useSelector((state) => state.list.isLoading);
+  const data = useSelector((state) => state.list.data);
+  const loadingProcess = useSelector((state) => state.list.loadingProcess);
+
   useEffect(() => {
-    const timer = setInterval(() => { handleUpdate() }, 64000);
-    
+    const timer = setInterval(() => {
+      handleUpdate();
+    }, 64000);
+
     handleUpdate();
     return () => {
       clearInterval(timer);
@@ -75,8 +82,8 @@ const Main = ({ handleUpdate, isLoading, loadingProcess, data }) => {
         <ul className={classes.list}>
           {data.map((item) => {
             return (
-              <Link to={`/news/${item.id}`} className={classes.link}>
-                <Item item={item} key={item.id} />
+              <Link key={item.id} to={`/${item.id}`} className={classes.link}>
+                <Item item={item} />
               </Link>
             );
           })}
@@ -85,4 +92,3 @@ const Main = ({ handleUpdate, isLoading, loadingProcess, data }) => {
     </section>
   );
 };
-export default Main;
