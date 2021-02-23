@@ -10,7 +10,8 @@ import { Comment } from "./components/Comment";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    marginTop: " 50px",
+    marginTop: "50px",
+    paddingBottom: "30px",
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -42,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
   subtitle_container: {
     marginTop: "30px",
     marginBottom: "30px",
-    display:'flex',
-    justifyContent: 'space-between',
+    display: "flex",
+    justifyContent: "space-between",
   },
   wrapper_subtitle: {
     display: "flex",
   },
   url: {
-    marginLeft: '102px',
+    marginLeft: "102px",
     color: "#000",
   },
   author: {
@@ -62,8 +63,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  section: {
-  },
+  section: {},
   comments: {
     marginLeft: "60px",
   },
@@ -72,9 +72,9 @@ const useStyles = makeStyles((theme) => ({
     listStyleType: "none",
   },
   noComments: {
-    marginLeft: '102px',
-    marginBottom: '30px',
-  }
+    marginLeft: "102px",
+    marginBottom: "30px",
+  },
 }));
 
 export const Item = () => {
@@ -84,7 +84,7 @@ export const Item = () => {
 
   const item = useSelector((state) => state.item.data);
   const comments = useSelector((state) => state.comments.data);
-  
+
   const handleGetNews = useCallback(
     (id) => {
       dispatch(getItem(id));
@@ -111,28 +111,26 @@ export const Item = () => {
   }, [handleGetNews, id]);
 
   useEffect(() => {
+    console.log("hi");
     const timer = setInterval(() => {
       handleGetItemKids(Number(id), item.kids);
       // console.log(item.kids)
       // handleGetComments(item.kids);
-    }, 60000);
+    }, 10000);
 
     handleGetComments(item.kids);
     return () => {
       clearInterval(timer);
     };
 
-
     // if (!isEmpty(item) && item.kids) {
     //   handleGetComments(item.kids);
     // }
-  }, [handleGetComments, item, id, handleGetItemKids]);  
+  }, [handleGetComments, item, id, handleGetItemKids]);
 
   if (isEmpty(item)) {
     return null;
   }
-
-  console.log(comments);
 
   return (
     <Container>
@@ -159,34 +157,50 @@ export const Item = () => {
               component="span"
               className={classes.author}
             >{`Author: ${item.by}`}</Typography>
-            <Typography variant='h5' component="span" className={classes.time}>
+            <Typography variant="h5" component="span" className={classes.time}>
               {dateFormat(item.time)}
             </Typography>
           </div>
         </div>
-        {!isEmpty(comments) && item.kids? <section className={classes.section}>
-          <Typography variant="h4" component="h3" className={classes.comments}>
-            Comments({item.kids.length}):
-          </Typography>
-          <ul className={classes.list}>
-            <li>
-              {item.kids.map((id) => {
-                if (comments[id] && comments[id].deleted) {
+        {!isEmpty(comments) && item.kids ? (
+          <section className={classes.section}>
+            <Typography
+              variant="h4"
+              component="h3"
+              className={classes.comments}
+            >
+              Comments({item.kids.length}):
+            </Typography>
+            <ul className={classes.list}>
+              <li>
+                {item.kids.map((id) => {
+                  if (comments[id] && comments[id].deleted) {
+                    return (
+                      <Typography
+                        variant="h6"
+                        component="h4"
+                        key={comments[id].id}
+                      >
+                        This comment was deleted
+                      </Typography>
+                    );
+                  }
                   return (
-                    <h2 key={comments[id].id}>This comment was deleted</h2>
+                    <Comment
+                      comment={comments[id]}
+                      key={comments[id].id}
+                      handleGetComments={handleGetComments}
+                    />
                   );
-                }
-                return (
-                  <Comment
-                    comment={comments[id]}
-                    key={comments[id].id}
-                    handleGetComments={handleGetComments}
-                  />
-                );
-              })}
-            </li>
-          </ul>
-        </section> : <Typography variant='h4' component="p" className={classes.noComments}>There are not comments yet</Typography> }
+                })}
+              </li>
+            </ul>
+          </section>
+        ) : (
+          <Typography variant="h4" component="p" className={classes.noComments}>
+            There are not comments yet
+          </Typography>
+        )}
       </main>
     </Container>
   );

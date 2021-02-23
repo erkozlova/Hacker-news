@@ -33,7 +33,7 @@ export const list = (state = initialState, action) => {
       return {
         ...state,
         data: [],
-        isLoading: false
+        isLoading: false,
       };
 
     default:

@@ -1,23 +1,27 @@
 import * as api from "../utils/api";
-import { GET_COMMENTS_SUCCESS, GET_COMMENTS_FAILED, GET_COMMENTS_REQUEST } from "../constants";
+import {
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_FAILED,
+  GET_COMMENTS_REQUEST,
+} from "../constants";
 
-export const getComments = (commentsId, path=[]) => async (dispatch) => {
+export const getComments = (commentsId, path = []) => async (dispatch) => {
   dispatch({
     type: GET_COMMENTS_REQUEST,
   });
 
-
   try {
-    if(!commentsId.length) {
+    if (!commentsId.length) {
       throw new Error("Not found");
     }
 
     const commentsData = await Promise.all(
-      commentsId.map(( item) => { 
+      commentsId.map((item) => {
         return api.getComment(item);
-    }));
+      })
+    );
 
-    if(!commentsData.length) {
+    if (!commentsData.length) {
       throw new Error("Not found");
     }
 
@@ -25,7 +29,7 @@ export const getComments = (commentsId, path=[]) => async (dispatch) => {
       obj[comment.id] = {
         ...comment,
         comments: {},
-        path: [...path, comment.id]
+        path: [...path, comment.id],
       };
       return obj;
     }, {});
@@ -35,7 +39,7 @@ export const getComments = (commentsId, path=[]) => async (dispatch) => {
       payload: {
         data: commentDataObj,
         path,
-      }
+      },
     });
   } catch (err) {
     return dispatch({

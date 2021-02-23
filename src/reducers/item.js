@@ -44,13 +44,13 @@ export const item = (state = initialState, action) => {
           kids: action.payload,
         },
         isLoading: false,
-    };
+      };
 
-    case GET_ITEM_KIDS_CURRENT: 
+    case GET_ITEM_KIDS_CURRENT:
       return {
         ...state,
         isLoading: false,
-    };
+      };
 
     case GET_ITEM_KIDS_FAILED:
       return {

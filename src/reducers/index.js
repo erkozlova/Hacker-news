@@ -6,5 +6,5 @@ import { comments } from "./comments";
 export default combineReducers({
   list,
   item,
-  comments
+  comments,
 });
