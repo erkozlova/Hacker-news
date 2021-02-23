@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Icon } from "./components/Icon";
@@ -11,8 +12,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-  typography: {
+  logo: {
     color: theme.palette.fourth.main,
+  },
+  link: {
+    textDecoration: 'none',
   },
 }));
 
@@ -23,8 +27,10 @@ export const Appbar = ({ handleUpdate }) => {
     <section>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar variant="dense" className={classes.root}>
-          <Typography variant="h4" className={classes.typography}>
-            News
+          <Typography variant="h4" className={classes.logo}>
+            <Link to="/" className={classes.link}>
+              News
+            </Link>
           </Typography>
           <Icon handleUpdate={handleUpdate} />
         </Toolbar>

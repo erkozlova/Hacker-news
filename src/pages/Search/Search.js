@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     padding: "0",
+    marginTop: "20px",
   },
   notFound: {
     marginTop: "100px",
@@ -50,7 +51,7 @@ export const Search = ({ handleUpdate }) => {
   useEffect(() => {
     const timer = setInterval(() => {
       handleUpdate();
-    }, 64000);
+    }, 60000);
 
     handleUpdate();
     return () => {

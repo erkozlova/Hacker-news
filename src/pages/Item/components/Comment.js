@@ -1,10 +1,13 @@
 import React, { useCallback } from "react";
+import { isEmpty } from 'lodash';
 import { Typography, Button } from "@material-ui/core";
 import { dateFormat } from "../../../utils/dateFormat";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  list: {},
+  commentContainer: {
+    marginLeft: '20px',
+  },
   comment: {
     marginBottom: "20px",
     width: "100%",
@@ -32,8 +35,22 @@ export const Comment = ({ comment, handleGetComments }) => {
     handleGetComments(comment.kids, comment.path);
   }, [handleGetComments, comment]);
 
+  if (comment.deleted) {
+    return (
+      <li className={classes.commentContainer}>
+        <Typography
+          variant="h6"
+          component="h4"
+          color="textSecondary"
+        >
+          This comment was deleted
+        </Typography>
+      </li>
+    );
+  }
+
   return (
-    <>
+    <li className={classes.commentContainer}>
       <div className={classes.comment}>
         <div className={classes.wrapper}>
           <Typography
@@ -50,7 +67,7 @@ export const Comment = ({ comment, handleGetComments }) => {
           component="p"
           dangerouslySetInnerHTML={{ __html: comment.text }}
         />
-        {comment.kids ? (
+        {comment.kids && isEmpty(comment.comments) && (
           <Button
             variant="contained"
             color="primary"
@@ -59,22 +76,17 @@ export const Comment = ({ comment, handleGetComments }) => {
           >
             See more comments
           </Button>
-        ) : (
-          <></>
         )}
       </div>
       <ul className={classes.list}>
-        {Object.keys(comment.comments).map((id) => {
-          const item = comment.comments[id];
-          return (
+        {Object.values(comment.comments).map((item) => (
             <Comment
               key={item.id}
               comment={item}
               handleGetComments={handleGetComments}
             />
-          );
-        })}
+          ))}
       </ul>
-    </>
+    </li>
   );
 };

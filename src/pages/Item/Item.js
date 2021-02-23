@@ -10,7 +10,7 @@ import { Comment } from "./components/Comment";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    marginTop: "50px",
+    margin: "50px 0",
     paddingBottom: "30px",
     width: "100%",
     display: "flex",
@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     width: "90%",
     marginLeft: "30px",
   },
+  learnMoreLink: {
+    color: theme.palette.fourth.main,
+    marginLeft: "102px",
+  },
   subtitle_container: {
     marginTop: "30px",
     marginBottom: "30px",
@@ -48,10 +52,6 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper_subtitle: {
     display: "flex",
-  },
-  url: {
-    marginLeft: "102px",
-    color: "#000",
   },
   author: {
     marginRight: "20px",
@@ -63,9 +63,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  section: {},
   comments: {
     marginLeft: "60px",
+    marginBottom: "20px",
   },
   list: {
     padding: "0 60px",
@@ -93,8 +93,8 @@ export const Item = () => {
   );
 
   const handleGetItemKids = useCallback(
-    (id, kids) => {
-      dispatch(getItemKids(id, kids));
+    (id) => {
+      dispatch(getItemKids(id));
     },
     [dispatch]
   );
@@ -111,21 +111,19 @@ export const Item = () => {
   }, [handleGetNews, id]);
 
   useEffect(() => {
-    console.log("hi");
-    const timer = setInterval(() => {
-      handleGetItemKids(Number(id), item.kids);
-      // console.log(item.kids)
-      // handleGetComments(item.kids);
-    }, 10000);
+    if (item.kids && isEmpty(comments)) {
+      handleGetComments(item.kids);
+    }
+  }, [item, comments, handleGetComments]);
 
-    handleGetComments(item.kids);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      handleGetItemKids(Number(id));
+    }, 60000);
+
     return () => {
       clearInterval(timer);
     };
-
-    // if (!isEmpty(item) && item.kids) {
-    //   handleGetComments(item.kids);
-    // }
   }, [handleGetComments, item, id, handleGetItemKids]);
 
   if (isEmpty(item)) {
@@ -146,11 +144,13 @@ export const Item = () => {
           </Typography>
         </div>
         <div className={classes.subtitle_container}>
-          <a href={item.url} className={classes.url}>
-            <Typography variant="h5" component="span">
-              Learn more
-            </Typography>
-          </a>
+          <Typography
+            variant="h5"
+            component="span"
+            className={classes.learnMoreLink}
+          >
+            <a href={item.url}>Learn more</a>
+          </Typography>
           <div className={classes.wrapper_subtitle}>
             <Typography
               variant="h5"
@@ -163,7 +163,7 @@ export const Item = () => {
           </div>
         </div>
         {!isEmpty(comments) && item.kids ? (
-          <section className={classes.section}>
+          <>
             <Typography
               variant="h4"
               component="h3"
@@ -172,33 +172,18 @@ export const Item = () => {
               Comments({item.kids.length}):
             </Typography>
             <ul className={classes.list}>
-              <li>
-                {item.kids.map((id) => {
-                  if (comments[id] && comments[id].deleted) {
-                    return (
-                      <Typography
-                        variant="h6"
-                        component="h4"
-                        key={comments[id].id}
-                      >
-                        This comment was deleted
-                      </Typography>
-                    );
-                  }
-                  return (
-                    <Comment
-                      comment={comments[id]}
-                      key={comments[id].id}
-                      handleGetComments={handleGetComments}
-                    />
-                  );
-                })}
-              </li>
+              {item.kids.map((id) => (
+                  <Comment
+                    comment={comments[id]}
+                    key={comments[id].id}
+                    handleGetComments={handleGetComments}
+                  />
+                ))}
             </ul>
-          </section>
+          </>
         ) : (
           <Typography variant="h4" component="p" className={classes.noComments}>
-            There are not comments yet
+            There are no comments yet
           </Typography>
         )}
       </main>
