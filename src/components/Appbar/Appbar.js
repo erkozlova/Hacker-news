@@ -1,7 +1,8 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
-import RefreshIcon from "@material-ui/icons/Refresh";
+import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Icon } from "./components/Icon";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -11,31 +12,29 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-  typography: {
+  logo: {
     color: theme.palette.fourth.main,
   },
-  refresh: {
-    width: '40px',
-    height: '40px',
-    color: theme.palette.fourth.main,
+  link: {
+    textDecoration: 'none',
   },
 }));
 
-const  Appbar = (props) => {
+export const Appbar = ({ handleUpdate }) => {
   const classes = useStyles();
 
   return (
     <section>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar variant="dense" className={classes.root}>
-          <Typography variant="h4" className={classes.typography}>News</Typography>
-          <IconButton edge="end" aria-label="refresh" onClick={props.handleUpdate}>
-            <RefreshIcon className={classes.refresh}/>
-          </IconButton>
+          <Typography variant="h4" className={classes.logo}>
+            <Link to="/" className={classes.link}>
+              News
+            </Link>
+          </Typography>
+          <Icon handleUpdate={handleUpdate} />
         </Toolbar>
       </AppBar>
     </section>
   );
-}
-
-export default Appbar;
+};

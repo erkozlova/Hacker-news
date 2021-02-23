@@ -1,7 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { dateFormat } from "../utils/dateFormat";
+import { makeStyles } from "@material-ui/core/styles";
+import { dateFormat } from "../../../utils/dateFormat";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Item = ({ item }) => {
+// Компонента карточки новости в списке
+export const Item = ({ item }) => {
   const classes = useStyles();
 
   return (
@@ -56,10 +57,7 @@ const Item = ({ item }) => {
           <Typography variant="h5" className={classes.title}>
             {item.title}
           </Typography>
-          <Typography
-            variant="subtitle2"
-            className={classes.author}
-          >
+          <Typography variant="subtitle2" className={classes.author}>
             {`Author: ${item.by}`}
           </Typography>
         </div>
@@ -70,5 +68,3 @@ const Item = ({ item }) => {
     </div>
   );
 };
-
-export default Item;
