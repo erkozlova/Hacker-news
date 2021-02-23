@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
-import { isEmpty } from 'lodash';
+import { isEmpty } from "lodash";
 import { Typography, Button } from "@material-ui/core";
 import { dateFormat } from "../../../utils/dateFormat";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
-    marginLeft: '20px',
+    marginLeft: "20px",
   },
   comment: {
     marginBottom: "20px",
@@ -28,27 +28,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Компонента комментария к новости
 export const Comment = ({ comment, handleGetComments }) => {
   const classes = useStyles();
 
+  // Получение дочерних комментариев по клику
   const getKidsComments = useCallback(() => {
     handleGetComments(comment.kids, comment.path);
   }, [handleGetComments, comment]);
 
+  // Если комментарии удален, отрисовываем сообщение 
   if (comment.deleted) {
     return (
       <li className={classes.commentContainer}>
-        <Typography
-          variant="h6"
-          component="h4"
-          color="textSecondary"
-        >
+        <Typography variant="h6" component="h4" color="textSecondary">
           This comment was deleted
         </Typography>
       </li>
     );
   }
 
+  // Отрисовываем список вложенных комментариев через рекурсию
   return (
     <li className={classes.commentContainer}>
       <div className={classes.comment}>
@@ -80,12 +80,12 @@ export const Comment = ({ comment, handleGetComments }) => {
       </div>
       <ul className={classes.list}>
         {Object.values(comment.comments).map((item) => (
-            <Comment
-              key={item.id}
-              comment={item}
-              handleGetComments={handleGetComments}
-            />
-          ))}
+          <Comment
+            key={item.id}
+            comment={item}
+            handleGetComments={handleGetComments}
+          />
+        ))}
       </ul>
     </li>
   );

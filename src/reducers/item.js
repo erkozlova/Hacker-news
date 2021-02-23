@@ -2,10 +2,9 @@ import {
   GET_ITEM_SUCCESS,
   GET_ITEM_FAILED,
   GET_ITEM_REQUEST,
-  GET_ITEM_KIDS_NEW,
-  GET_ITEM_KIDS_FAILED,
-  GET_ITEM_KIDS_REQUEST,
-  GET_ITEM_KIDS_CURRENT,
+ GET_ITEM_COMMENTS_FAILED,
+ GET_ITEM_COMMENTS_REQUEST,
+ GET_ITEM_COMMENTS_SUCCESS,
 } from "../constants";
 
 const initialState = { data: {}, isLoading: false };
@@ -30,32 +29,22 @@ export const item = (state = initialState, action) => {
         data: {},
         isLoading: false,
       };
-    case GET_ITEM_KIDS_REQUEST:
+    case GET_ITEM_COMMENTS_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
 
-    case GET_ITEM_KIDS_NEW:
+    case GET_ITEM_COMMENTS_SUCCESS:
       return {
         ...state,
-        data: {
-          ...state.data,
-          kids: action.payload,
-        },
+        data: action.payload,
         isLoading: false,
       };
 
-    case GET_ITEM_KIDS_CURRENT:
+    case GET_ITEM_COMMENTS_FAILED:
       return {
         ...state,
-        isLoading: false,
-      };
-
-    case GET_ITEM_KIDS_FAILED:
-      return {
-        ...state,
-        // data: {},
         isLoading: false,
       };
     default:

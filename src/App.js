@@ -17,6 +17,7 @@ export const App = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  // Получение списка новостей
   const handleUpdate = useCallback(() => {
     dispatch(getList());
   }, [dispatch]);
@@ -29,7 +30,7 @@ export const App = () => {
           <Search handleUpdate={handleUpdate} />
         </Route>
         <Route path="/:id">
-          <Item></Item>
+          <Item />
         </Route>
       </Switch>
     </div>

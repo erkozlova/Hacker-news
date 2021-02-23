@@ -2,13 +2,23 @@ import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
-import { Typography, Container, Box } from "@material-ui/core";
+import { Typography, Container, Box, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dateFormat } from "../../utils/dateFormat";
-import { getItem, getComments, getItemKids } from "../../actions";
+import { getComments, getItemComments } from "../../actions";
 import { Comment } from "./components/Comment";
 
 const useStyles = makeStyles((theme) => ({
+  sectionLoader: {
+    display: "grid",
+    placeItems: "center",
+    height: "100vh",
+  },
+  circle: {
+    color: theme.palette.fourth.main,
+    width: '25vh',
+    height: '25vh',
+  },
   main: {
     margin: "50px 0",
     paddingBottom: "30px",
@@ -77,28 +87,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Компонента новости на отдельной странице
 export const Item = () => {
   const { id } = useParams();
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  // Получение данных из стейта
   const item = useSelector((state) => state.item.data);
   const comments = useSelector((state) => state.comments.data);
+  const isLoading = useSelector((state) => state.item.isLoading);
 
-  const handleGetNews = useCallback(
+  // Получение информации о новости и комментариев
+  const handleGetItemComments = useCallback(
     (id) => {
-      dispatch(getItem(id));
+      dispatch(getItemComments(id));
     },
     [dispatch]
   );
 
-  const handleGetItemKids = useCallback(
-    (id) => {
-      dispatch(getItemKids(id));
-    },
-    [dispatch]
-  );
-
+  // Получение вложенных комментариев при клике на комментарий
   const handleGetComments = useCallback(
     (array, path) => {
       dispatch(getComments(array, path));
@@ -106,30 +114,38 @@ export const Item = () => {
     [dispatch]
   );
 
+  // Получение информации при первой отрисовке новости
   useEffect(() => {
-    handleGetNews(Number(id));
-  }, [handleGetNews, id]);
+    handleGetItemComments(Number(id));
+  }, [handleGetItemComments, id]);
 
-  useEffect(() => {
-    if (item.kids && isEmpty(comments)) {
-      handleGetComments(item.kids);
-    }
-  }, [item, comments, handleGetComments]);
-
+  // Интервал получения информации
   useEffect(() => {
     const timer = setInterval(() => {
-      handleGetItemKids(Number(id));
+      handleGetItemComments(Number(id));
     }, 60000);
 
+    // Удаление интервала при демонтировании новости
     return () => {
       clearInterval(timer);
     };
-  }, [handleGetComments, item, id, handleGetItemKids]);
+  }, [id, handleGetItemComments]);
 
+  // При загрузке отрисовывается загрузчик
+  if (isLoading) {
+    return (
+      <section className={classes.sectionLoader}>
+        <CircularProgress size="25vh" className={classes.circle}/>
+      </section>
+    );
+  }
+
+  // При отсутствии информации о новости
   if (isEmpty(item)) {
     return null;
   }
 
+  // Возвращаем верстку новости. И комментариев, если они есть, в противном случае Сообщение об отсутсвии комментариев
   return (
     <Container>
       <main className={classes.main}>
@@ -173,12 +189,12 @@ export const Item = () => {
             </Typography>
             <ul className={classes.list}>
               {item.kids.map((id) => (
-                  <Comment
-                    comment={comments[id]}
-                    key={comments[id].id}
-                    handleGetComments={handleGetComments}
-                  />
-                ))}
+                <Comment
+                  comment={comments[id]}
+                  key={comments[id].id}
+                  handleGetComments={handleGetComments}
+                />
+              ))}
             </ul>
           </>
         ) : (

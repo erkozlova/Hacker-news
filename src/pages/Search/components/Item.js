@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Компонента карточки новости в списке
 export const Item = ({ item }) => {
   const classes = useStyles();
 

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Typography, CircularProgress, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -46,8 +45,4 @@ export const CircularProgressWithLabel = (props) => {
       </Box>
     </Box>
   );
-};
-
-CircularProgressWithLabel.propTypes = {
-  loadingProcess: PropTypes.number.isRequired,
 };

@@ -1,4 +1,3 @@
-import { isEmpty } from "lodash";
 import {
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_FAILED,
@@ -11,10 +10,6 @@ const setComments = (oldComments, data, path) => {
   if (!path.length) {
     return data;
   }
-
-  // if(isEmpty(oldComments)) {
-  //   return {};
-  // }
 
   const copy = JSON.parse(JSON.stringify(oldComments));
   if (path.length > 1) {

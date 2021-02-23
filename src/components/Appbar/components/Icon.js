@@ -1,13 +1,10 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import RefreshIcon from "@material-ui/icons/Refresh";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-
-const pathsMap = {
-  "/": { icon: "refresh" },
-};
+import { getItemComments } from '../../../actions';
 
 const useStyles = makeStyles((theme) => ({
   refresh: {
@@ -24,22 +21,30 @@ const useStyles = makeStyles((theme) => ({
 
 export const Icon = ({ handleUpdate }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const location = useLocation().pathname;
+  const id = useSelector((state) => state.item.data.id)
 
-  const icon = (pathsMap[location] ? pathsMap[location] : {}).icon;
+  // Получение информации о новости и её комментариях
+  const handleGetItemComments = useCallback((id) => {
+    dispatch(getItemComments(id))
+  }, [dispatch]);
 
-  if (icon === "refresh") {
-    return (
-      <IconButton edge="end" aria-label="refresh" onClick={handleUpdate}>
-        <RefreshIcon className={classes.refresh} />
-      </IconButton>
-    );
+  // Выбор типа обновление страницы, в зависимости от пути
+  const onClickFunction = () => {
+    if(location === '/') {
+      // Обновляем список новостей
+      handleUpdate();
+    }
+    else {
+      // Обновляем страницу новости
+      handleGetItemComments(id);
+    }
   }
+
   return (
-    <Link to="/">
-      <IconButton edge="end" aria-label="arrow-back">
-        <ArrowBackIcon fontSize="large" className={classes.back} />
-      </IconButton>
-    </Link>
+    <IconButton edge="end" aria-label="refresh" onClick={onClickFunction}>
+      <RefreshIcon className={classes.refresh} />
+    </IconButton>
   );
 };

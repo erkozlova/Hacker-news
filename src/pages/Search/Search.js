@@ -41,24 +41,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Компонента списка новостей
 export const Search = ({ handleUpdate }) => {
   const classes = useStyles();
 
+  // Получение значений стейтов
   const isLoading = useSelector((state) => state.list.isLoading);
   const data = useSelector((state) => state.list.data);
   const loadingProcess = useSelector((state) => state.list.loadingProcess);
 
+  // Интервал обновления новостей
   useEffect(() => {
     const timer = setInterval(() => {
       handleUpdate();
     }, 60000);
 
+    // Первый запрос новостей
     handleUpdate();
+
+    // Удаление интервала при демонтировании секции новостей
     return () => {
       clearInterval(timer);
     };
   }, [handleUpdate]);
 
+  // При загрузке данных отрисовывается лоадер
   if (isLoading) {
     return (
       <section className={classes.sectionLoader}>
@@ -67,6 +74,7 @@ export const Search = ({ handleUpdate }) => {
     );
   }
 
+  // При отсутсвии данных с сервера
   if (!data.length) {
     return (
       <section className={classes.sectionNotFound}>
