@@ -1,45 +1,27 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
+import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dateFormat } from "../../../utils/dateFormat";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.third.main,
-    display: "flex",
-    width: "100%",
-    height: "100px",
     marginBottom: "10px",
-    border: "solid 2px #000",
+    padding: "15px",
     borderRadius: "5px",
-    justifyContent: "space-between",
-  },
-  rating: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "50px",
-    height: "100px",
-    borderRight: "solid 1px #000",
-    marginRight: "20px",
-  },
-  wrapper: {
-    display: "flex",
   },
   title: {
-    marginTop: "10px",
-  },
-  describe: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "18px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "14px",
+    },
   },
   time: {
-    marginRight: "10px",
-    marginTop: "10px",
-  },
-  author: {
-    marginBottom: "10px",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "12px",
+    },
   },
 }));
 
@@ -48,23 +30,31 @@ export const Item = ({ item }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.container}>
-      <div className={classes.wrapper}>
-        <div className={classes.rating}>
+    <article className={classes.container}>
+      <Grid container spacing={2}>
+        <Grid
+          item
+          xs={1}
+          container
+          alignItems="center"
+          justify="center"
+        >
           <Typography component="span">{item.score}</Typography>
-        </div>
-        <div className={classes.describe}>
-          <Typography variant="h5" className={classes.title}>
+        </Grid>
+        <Grid item xs={9}>
+          <Typography variant="h5" className={classes.title} gutterBottom>
             {item.title}
           </Typography>
-          <Typography variant="subtitle2" className={classes.author}>
+          <Typography variant="subtitle2">
             {`Author: ${item.by}`}
           </Typography>
-        </div>
-      </div>
-      <Typography component="span" className={classes.time}>
-        {dateFormat(item.time)}
-      </Typography>
-    </div>
+        </Grid>
+        <Grid item xs={2} container alignItems="center" justify="center">
+          <Typography component="span" className={classes.time}>
+            {dateFormat(item.time)}
+          </Typography>
+        </Grid>
+      </Grid>
+    </article>
   );
 };
