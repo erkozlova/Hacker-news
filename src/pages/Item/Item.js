@@ -5,9 +5,8 @@ import { isEmpty } from "lodash";
 import { Typography, Container, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dateFormat } from "../../utils/dateFormat";
-import { getItem } from "../../actions";
+import { getItem, getComments, getItemKids } from "../../actions";
 import { Comment } from "./components/Comment";
-import { getComments } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -66,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   section: {
   },
   comments: {
-    marginLeft: "30px",
+    marginLeft: "60px",
   },
   list: {
     padding: "0 60px",
@@ -93,6 +92,13 @@ export const Item = () => {
     [dispatch]
   );
 
+  const handleGetItemKids = useCallback(
+    (id, kids) => {
+      dispatch(getItemKids(id, kids));
+    },
+    [dispatch]
+  );
+
   const handleGetComments = useCallback(
     (array, path) => {
       dispatch(getComments(array, path));
@@ -105,25 +111,28 @@ export const Item = () => {
   }, [handleGetNews, id]);
 
   useEffect(() => {
-    // const timer = setInterval(() => {
-    //   console.log(item.kids)
+    const timer = setInterval(() => {
+      handleGetItemKids(Number(id), item.kids);
+      // console.log(item.kids)
+      // handleGetComments(item.kids);
+    }, 60000);
+
+    handleGetComments(item.kids);
+    return () => {
+      clearInterval(timer);
+    };
+
+
+    // if (!isEmpty(item) && item.kids) {
     //   handleGetComments(item.kids);
-    // }, 1000);
-
-    // handleGetComments(item.kids);
-    // return () => {
-    //   clearInterval(timer);
-    // };
-
-
-    if (!isEmpty(item) && item.kids) {
-      handleGetComments(item.kids);
-    }
-  }, [handleGetComments, item]);  
+    // }
+  }, [handleGetComments, item, id, handleGetItemKids]);  
 
   if (isEmpty(item)) {
     return null;
   }
+
+  console.log(comments);
 
   return (
     <Container>
@@ -141,7 +150,7 @@ export const Item = () => {
         <div className={classes.subtitle_container}>
           <a href={item.url} className={classes.url}>
             <Typography variant="h5" component="span">
-              See more details
+              Learn more
             </Typography>
           </a>
           <div className={classes.wrapper_subtitle}>
@@ -162,9 +171,6 @@ export const Item = () => {
           <ul className={classes.list}>
             <li>
               {item.kids.map((id) => {
-                console.log('item', item)
-                console.log(id)
-                console.log(comments);
                 if (comments[id] && comments[id].deleted) {
                   return (
                     <h2 key={comments[id].id}>This comment was deleted</h2>
