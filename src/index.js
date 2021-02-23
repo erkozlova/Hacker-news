@@ -10,7 +10,7 @@ import { theme } from "./theme/theme";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/Hacker-news">
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <App />

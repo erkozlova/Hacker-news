@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   percent: {
     fontSize: "55px",
     color: theme.palette.third.main,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: "44px",
+    },
   },
   circle: {
     color: theme.palette.fourth.main,

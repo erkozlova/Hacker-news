@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     margin: "50px 0",
-    paddingBottom: "30px",
+    boxSizing: "border-box",
+    padding: "10px",
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -42,17 +43,34 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     backgroundColor: theme.palette.fourth.main,
     borderRadius: "50%",
+    [theme.breakpoints.down("md")]: {
+      width: "30px",
+      height: "30px",
+    },
   },
   score: {
     fontSize: "20px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "14px",
+    },
   },
   title: {
     width: "90%",
     marginLeft: "30px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "40px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "20px",
+    },
   },
   learnMoreLink: {
     color: theme.palette.fourth.main,
     marginLeft: "102px",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "80px",
+      fontSize: "15px",
+    },
   },
   subtitle_container: {
     marginTop: "30px",
@@ -67,15 +85,24 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "20px",
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "15px",
+    },
   },
   time: {
     marginRight: "20px",
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "15px",
+    },
   },
   comments: {
     marginLeft: "60px",
     marginBottom: "20px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "30px",
+    },
   },
   list: {
     padding: "0 60px",
