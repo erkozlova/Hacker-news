@@ -5,7 +5,7 @@ import {
   GET_LIST_PROCESS,
 } from "../constants";
 
-const initialState = { data: [], isLoading: false, loadingProcess: 0 };
+export const initialState = { data: [], isLoading: false, loadingProcess: 0 };
 
 export const list = (state = initialState, action) => {
   switch (action.type) {

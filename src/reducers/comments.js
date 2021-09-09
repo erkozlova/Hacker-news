@@ -4,7 +4,7 @@ import {
   GET_COMMENTS_REQUEST,
 } from "../constants";
 
-const initialState = { data: {}, isLoading: false };
+export const initialState = { data: {}, isLoading: false };
 
 const setComments = (oldComments, data, path) => {
   if (!path.length) {

@@ -7,7 +7,7 @@ import {
  GET_ITEM_COMMENTS_SUCCESS,
 } from "../constants";
 
-const initialState = { data: {}, isLoading: false };
+export const initialState = { data: {}, isLoading: false };
 
 export const item = (state = initialState, action) => {
   switch (action.type) {

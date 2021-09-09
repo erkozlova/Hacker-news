@@ -41,7 +41,7 @@ export const getItemComments = (id) => async (dispatch) => {
         throw new Error("Not found");
       }
 
-      // Собираем информацию о каждом комментарии в объект, добавив путь, где он должен хранится в стейте клмментариев
+      // Собираем информацию о каждом комментарии в объект, добавив путь, где он должен хранится в стейте комментариев
       const commentDataObj = newComments.reduce((obj, comment) => {
         obj[comment.id] = {
           ...comment,
