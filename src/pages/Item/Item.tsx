@@ -1,12 +1,14 @@
-import React, { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useCallback, FC } from "react";
 import { useParams } from "react-router-dom";
-import { isEmpty } from "lodash";
+// import { isEmpty } from "lodash";
 import { Typography, Container, Box, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dateFormat } from "../../utils/dateFormat";
 import { getComments, getItemComments } from "../../actions";
 import { Comment } from "./components/Comment";
+import { useAppSelector } from "../../store";
+import { useDispatch } from "react-redux";
+import { isFilled } from "./utils/isFilled";
 
 const useStyles = makeStyles((theme) => ({
   sectionLoader: {
@@ -115,15 +117,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Компонента новости на отдельной странице
-export const Item = () => {
-  const { id } = useParams();
+export const Item: FC = () => {
+  const { id } = useParams<{ id: string }>();
   const classes = useStyles();
   const dispatch = useDispatch();
 
   // Получение данных из стейта
-  const item = useSelector((state) => state.item.data);
-  const comments = useSelector((state) => state.comments.data);
-  const isLoading = useSelector((state) => state.item.isLoading);
+  const item = useAppSelector((state) => state.item.data);
+  const comments = useAppSelector((state) => state.comments.data);
+  const isLoading = useAppSelector((state) => state.item.isLoading);
 
   // Получение информации о новости и комментариев
   const handleGetItemComments = useCallback(
@@ -167,8 +169,9 @@ export const Item = () => {
     );
   }
 
+  // TODO Переписать логику с учетем null вместо {}
   // При отсутствии информации о новости
-  if (isEmpty(item)) {
+  if (!isFilled(item)) {
     return null;
   }
 
@@ -205,7 +208,7 @@ export const Item = () => {
             </Typography>
           </div>
         </div>
-        {!isEmpty(comments) && item.kids ? (
+        {isFilled(comments) && item.kids ? (
           <>
             <Typography
               variant="h4"
@@ -214,6 +217,7 @@ export const Item = () => {
             >
               Comments({item.kids.length}):
             </Typography>
+            {comments}
             <ul className={classes.list}>
               {item.kids.map((id) => (
                 <Comment

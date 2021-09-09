@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dateFormat } from "../../../utils/dateFormat";
@@ -25,8 +25,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type Props = {
+  item: {
+    score: number;
+    title: string;
+    by: string;
+    time: number;
+  }
+}
+
 // Компонента карточки новости в списке
-export const Item = ({ item }) => {
+export const Item: FC<Props> = ({ item }) => {
   const classes = useStyles();
 
   return (

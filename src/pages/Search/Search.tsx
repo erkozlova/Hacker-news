@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Typography, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgressWithLabel } from "./components/CircularProgressWithLabel";
 import { Item } from "./components/Item";
+import { useAppSelector } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
   sectionLoader: {
@@ -41,14 +41,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type Props = {
+  handleUpdate: () => void;
+}
+
 // Компонента списка новостей
-export const Search = ({ handleUpdate }) => {
+export const Search: FC<Props> = ({ handleUpdate }) => {
   const classes = useStyles();
 
   // Получение значений стейтов
-  const isLoading = useSelector((state) => state.list.isLoading);
-  const data = useSelector((state) => state.list.data);
-  const loadingProcess = useSelector((state) => state.list.loadingProcess);
+  const isLoading = useAppSelector((state) => state.list.isLoading);
+  const data = useAppSelector((state) => state.list.data);
+  const loadingProcess = useAppSelector((state) => state.list.loadingProcess);
 
   // Интервал обновления новостей
   useEffect(() => {

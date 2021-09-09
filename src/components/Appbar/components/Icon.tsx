@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { getItemComments } from '../../../actions';
+import { useAppDispatch, useAppSelector } from "../../../store";
 
 const useStyles = makeStyles((theme) => ({
   refresh: {
@@ -19,11 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Icon = ({ handleUpdate }) => {
+type Props = {
+  handleUpdate: () => void;
+}
+
+export const Icon: FC<Props> = ({ handleUpdate }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation().pathname;
-  const id = useSelector((state) => state.item.data.id)
+  const id = useAppSelector((state) => state.item.data.id)
 
   // Получение информации о новости и её комментариях
   const handleGetItemComments = useCallback((id) => {

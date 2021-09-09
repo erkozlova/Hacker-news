@@ -1,8 +1,10 @@
 import * as api from "../utils/api";
 import { GET_COMMENTS_SUCCESS, GET_COMMENTS_FAILED, GET_COMMENTS_REQUEST } from "../constants";
+import { Comment } from "../types";
+import { GetCommentsThunk } from "./types";
 
 // Загрузка вложеных комментариев к кликнутому комментарию
-export const getComments = (commentsId, path=[]) => async (dispatch) => {
+export const getComments = (commentsId: number[], path=[]): GetCommentsThunk => async (dispatch) => {
   dispatch({
     type: GET_COMMENTS_REQUEST,
   });
@@ -32,7 +34,7 @@ export const getComments = (commentsId, path=[]) => async (dispatch) => {
         path: [...path, comment.id]
       };
       return obj;
-    }, {});
+    }, {} as Record<number, Comment>);
 
     return dispatch({
       type: GET_COMMENTS_SUCCESS,

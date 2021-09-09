@@ -1,8 +1,9 @@
-import React, { useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { isEmpty } from "lodash";
 import { Typography, Button } from "@material-ui/core";
 import { dateFormat } from "../../../utils/dateFormat";
 import { makeStyles } from "@material-ui/core/styles";
+import { Comment as CommentType } from "../../../types";
 
 const useStyles = makeStyles((theme) => ({
   commentContainer: {
@@ -28,8 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type Props = {
+  comment: CommentType;
+  handleGetComments: (arg1: number[], arg2: number[]) => void;
+}
+
 // Компонента комментария к новости
-export const Comment = ({ comment, handleGetComments }) => {
+export const Comment: FC<Props> = ({ comment, handleGetComments }) => {
   const classes = useStyles();
 
   // Получение дочерних комментариев по клику
@@ -78,7 +84,7 @@ export const Comment = ({ comment, handleGetComments }) => {
           </Button>
         )}
       </div>
-      <ul className={classes.list}>
+      <ul>
         {Object.values(comment.comments).map((item) => (
           <Comment
             key={item.id}

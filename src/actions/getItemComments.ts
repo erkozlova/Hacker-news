@@ -7,9 +7,11 @@ import {
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_REQUEST,
 } from "../constants";
+import { Comment } from "../types";
+import { GetItemCommentThunk } from "./types";
 
 // Загружает информацию о выбранной новости и список комментарев к ней
-export const getItemComments = (id) => async (dispatch) => {
+export const getItemComments = (id: number): GetItemCommentThunk => async (dispatch) => {
   dispatch({
     type:GET_ITEM_COMMENTS_REQUEST,
   });
@@ -49,7 +51,7 @@ export const getItemComments = (id) => async (dispatch) => {
           path: [comment.id],
         };
         return obj;
-      }, {});
+      }, {} as Record<number, Comment>);
 
       dispatch({
         type: GET_COMMENTS_SUCCESS,

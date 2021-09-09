@@ -5,9 +5,11 @@ import {
   GET_LIST_FAILED,
   GET_LIST_PROCESS,
 } from "../constants";
+import { Item } from "../types";
+import { GetListThunk } from "./types";
 
 // Загружает список новостей
-export const getList = () => async (dispatch) => {
+export const getList = (): GetListThunk => async (dispatch) => {
   dispatch({
     type: GET_LIST_REQUEST,
   });
@@ -36,13 +38,13 @@ export const getList = () => async (dispatch) => {
         });
         
         return [...array, itemData];
-      }, [])
+      }, [] as Promise<Item>[])
     );
 
     // Отбираем не пустые новости
     const filterNewsData = newsData.reduce(
       (array, curr) => (curr ? [...array, curr] : array),
-      []
+      [] as Item[]
     );
 
     return dispatch({

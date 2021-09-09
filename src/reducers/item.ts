@@ -1,3 +1,4 @@
+import { GetItemActions, GetItemCommentActions } from "../actions/types";
 import {
   GET_ITEM_SUCCESS,
   GET_ITEM_FAILED,
@@ -6,10 +7,17 @@ import {
  GET_ITEM_COMMENTS_REQUEST,
  GET_ITEM_COMMENTS_SUCCESS,
 } from "../constants";
+import { Item } from "../types";
 
-export const initialState = { data: {}, isLoading: false };
+type State = {
+  data: Item | {};
+  isLoading: boolean;
+}
 
-export const item = (state = initialState, action) => {
+// TODO Заменить {} на null
+export const initialState: State = { data: {}, isLoading: false };
+
+export const item = (state = initialState, action: GetItemActions | GetItemCommentActions) => {
   switch (action.type) {
     case GET_ITEM_REQUEST:
       return {
@@ -23,6 +31,7 @@ export const item = (state = initialState, action) => {
         isLoading: false,
       };
 
+      // TODO Переписать на нул
     case GET_ITEM_FAILED:
       return {
         ...state,

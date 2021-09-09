@@ -4,8 +4,9 @@ import {
   GET_ITEM_FAILED,
   GET_ITEM_REQUEST,
 } from "../constants";
+import { GetItemThunk } from "./types";
 
-export const getItem = (id) => async (dispatch) => {
+export const getItem = (id: number): GetItemThunk => async (dispatch) => {
   dispatch({
     type: GET_ITEM_REQUEST,
   });

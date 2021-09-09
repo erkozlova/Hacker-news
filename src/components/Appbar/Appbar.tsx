@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,7 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Appbar = ({ handleUpdate }) => {
+type Props = {
+  handleUpdate: () => void;
+}
+
+export const Appbar: FC<Props> = ({ handleUpdate }) => {
   const classes = useStyles();
 
   return (

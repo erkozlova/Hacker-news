@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Appbar } from "./components/Appbar/Appbar";
 import { Search } from "./pages/Search/Search";
 import { Item } from "./pages/Item/Item";
 import { getList } from "./actions";
+import { useAppDispatch } from "./store";
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const App = () => {
-  const dispatch = useDispatch();
+export const App: FC = () => {
+  const dispatch = useAppDispatch();
   const classes = useStyles();
 
   // Получение списка новостей

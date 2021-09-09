@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Typography, CircularProgress, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const CircularProgressWithLabel = (props) => {
+type Props = {
+  loadingProcess: number;
+}
+
+export const CircularProgressWithLabel: FC<Props> = (props) => {
   const classes = useStyles();
 
   return (

@@ -3,8 +3,9 @@ import { list } from "./list";
 import { item } from "./item";
 import { comments } from "./comments";
 
-export default combineReducers({
+const per = combineReducers({
   list,
   item,
   comments,
 });
+export default  per;
