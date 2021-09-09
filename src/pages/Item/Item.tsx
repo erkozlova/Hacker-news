@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   circle: {
-    color: theme.palette.fourth.main,
+    color: theme.palette.secondary.dark,
     width: '25vh',
     height: '25vh',
   },
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: theme.palette.third.main,
+    backgroundColor: theme.palette.secondary.main,
     borderRadius: "6px",
   },
   wrapper_title: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: theme.palette.fourth.main,
+    backgroundColor: theme.palette.secondary.dark,
     borderRadius: "50%",
     [theme.breakpoints.down("md")]: {
       width: "30px",
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   learnMoreLink: {
-    color: theme.palette.fourth.main,
+    color: theme.palette.secondary.dark,
     marginLeft: "102px",
     [theme.breakpoints.down("sm")]: {
       marginLeft: "80px",
@@ -214,7 +214,6 @@ export const Item: FC = () => {
             >
               Comments({item.kids.length}):
             </Typography>
-            {comments}
             <ul className={classes.list}>
               {item.kids.map((id) => (
                 <Comment

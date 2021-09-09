@@ -6,14 +6,14 @@ import { Icon } from "./components/Icon";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.dark,
   },
   root: {
     display: "flex",
     justifyContent: "space-between",
   },
   logo: {
-    color: theme.palette.fourth.main,
+    color: theme.palette.secondary.dark,
   },
   link: {
     textDecoration: 'none',

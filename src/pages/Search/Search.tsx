@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100px",
     margin: "0 auto",
     borderRadius: "5px",
-    backgroundColor: theme.palette.third.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   list: {
     padding: "0",
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   notFound: {
     marginTop: "100px",
-    color: theme.palette.third.main,
+    color: theme.palette.secondary.main,
   },
   link: {
     textDecoration: "none",

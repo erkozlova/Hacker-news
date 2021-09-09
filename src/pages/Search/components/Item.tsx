@@ -5,7 +5,7 @@ import { dateFormat } from "../../../utils/dateFormat";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    backgroundColor: theme.palette.third.main,
+    backgroundColor: theme.palette.secondary.main,
     marginBottom: "10px",
     padding: "15px",
     borderRadius: "5px",

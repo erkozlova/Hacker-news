@@ -11,11 +11,11 @@ const useStyles = makeStyles((theme) => ({
   refresh: {
     width: "40px",
     height: "40px",
-    color: theme.palette.fourth.main,
+    color: theme.palette.secondary.dark,
   },
   back: {
-    color: theme.palette.secondary.main,
-    backgroundColor: theme.palette.fourth.main,
+    color: theme.palette.primary.dark,
+    backgroundColor: theme.palette.secondary.dark,
     borderRadius: "4px",
   },
 }));
