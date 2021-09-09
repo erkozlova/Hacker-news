@@ -5,7 +5,7 @@ import { Appbar } from "./components/Appbar/Appbar";
 import { Search } from "./pages/Search/Search";
 import { Item } from "./pages/Item/Item";
 import { getList } from "./actions";
-import { useAppDispatch } from "./store";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const App: FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   // Получение списка новостей

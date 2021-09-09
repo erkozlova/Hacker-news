@@ -10,12 +10,11 @@ import {
 import { Item } from "../types";
 
 type State = {
-  data: Item | {};
+  data: Item | null;
   isLoading: boolean;
 }
 
-// TODO Заменить {} на null
-export const initialState: State = { data: {}, isLoading: false };
+export const initialState: State = { data: null, isLoading: false };
 
 export const item = (state = initialState, action: GetItemActions | GetItemCommentActions) => {
   switch (action.type) {
@@ -31,11 +30,10 @@ export const item = (state = initialState, action: GetItemActions | GetItemComme
         isLoading: false,
       };
 
-      // TODO Переписать на нул
     case GET_ITEM_FAILED:
       return {
         ...state,
-        data: {},
+        data: null,
         isLoading: false,
       };
     case GET_ITEM_COMMENTS_REQUEST:

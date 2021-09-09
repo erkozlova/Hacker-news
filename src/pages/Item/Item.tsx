@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, FC } from "react";
 import { useParams } from "react-router-dom";
-// import { isEmpty } from "lodash";
 import { Typography, Container, Box, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { dateFormat } from "../../utils/dateFormat";
@@ -8,7 +7,6 @@ import { getComments, getItemComments } from "../../actions";
 import { Comment } from "./components/Comment";
 import { useAppSelector } from "../../store";
 import { useDispatch } from "react-redux";
-import { isFilled } from "./utils/isFilled";
 
 const useStyles = makeStyles((theme) => ({
   sectionLoader: {
@@ -169,9 +167,8 @@ export const Item: FC = () => {
     );
   }
 
-  // TODO Переписать логику с учетем null вместо {}
   // При отсутствии информации о новости
-  if (!isFilled(item)) {
+  if (!item) {
     return null;
   }
 
@@ -208,7 +205,7 @@ export const Item: FC = () => {
             </Typography>
           </div>
         </div>
-        {isFilled(comments) && item.kids ? (
+        {comments && item.kids ? (
           <>
             <Typography
               variant="h4"

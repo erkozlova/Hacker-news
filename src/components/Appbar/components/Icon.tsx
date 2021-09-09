@@ -4,7 +4,8 @@ import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { getItemComments } from '../../../actions';
-import { useAppDispatch, useAppSelector } from "../../../store";
+import { useAppSelector } from "../../../store";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   refresh: {
@@ -25,9 +26,9 @@ type Props = {
 
 export const Icon: FC<Props> = ({ handleUpdate }) => {
   const classes = useStyles();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const location = useLocation().pathname;
-  const id = useAppSelector((state) => state.item.data.id)
+  const id = useAppSelector((state) => state.item.data?.id)
 
   // Получение информации о новости и её комментариях
   const handleGetItemComments = useCallback((id) => {

@@ -7,19 +7,17 @@ import {
 import { Comment } from "../types";
 
 type State = {
-  data: Record<number, Comment> | {};
+  data: Record<number, Comment> | null;
   isLoading: boolean;
 }
 
-// TODO Заменить {} в data на null
-export const initialState: State = { data: {}, isLoading: false };
+export const initialState: State = { data: null, isLoading: false };
 
-const setComments = (oldComments: Record<number, Comment>, data: Record<number, Comment>, path: number[]) => {
+const setComments = (oldComments: Record<number, Comment> | null, data: Record<number, Comment>, path: number[]) => {
   if (!path.length) {
     return data;
   }
 
-  // TODO Если null, то берется {}. При записи подгруженных комментариев.
   const copy: Record<number, Comment> = JSON.parse(JSON.stringify(oldComments || {}));
   if (path.length > 1) {
     const currentPlace = copy[path[0]];
