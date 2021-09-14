@@ -19,12 +19,15 @@
 * `utils/api` - API
 * `utils/dateFormat` - функция форматирующая дату по заданному формату
 * `store` - конфигурация Redux store
+* `*/__tests__/*.test.js` - тесты
 
 ## Используемые технологии
 
 * React
 * React Router
 * Redux
+* TypeScript
+* Jest
 * Material-ui
 * lodash 
 * date-fns
