@@ -26,10 +26,10 @@ export const App: FC = () => {
     <div className={classes.app}>
       <Appbar handleUpdate={handleUpdate} />
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Search handleUpdate={handleUpdate} />
         </Route>
-        <Route path="/:id">
+        <Route path='/:id'>
           <Item />
         </Route>
       </Switch>

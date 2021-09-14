@@ -10,13 +10,13 @@ import { theme } from "./theme/theme";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter basename="/Hacker-news">
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </Provider>
-    </BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </Provider>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
